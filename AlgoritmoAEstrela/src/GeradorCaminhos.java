@@ -13,6 +13,77 @@ public class GeradorCaminhos {
         teste5x5();
         teste6x6();
         teste7x7();
+        testeSemSaida();
+        testeDestinoOrigemIgual();
+    }
+
+    
+    public static void testeDestinoOrigemIgual() {
+        Objeto[][] grade = new Objeto[5][5];
+        for (int i = 0; i < grade.length; i++) {
+            for (int j = 0; j < grade[i].length; j++) {
+                grade[i][j] = new Objeto(i, j);
+            }
+        }
+        //configura caminho incial e destino
+        Objeto origem = grade[0][0];
+        Objeto destino = grade[0][0];
+        /*configura bloqueios, exemplo
+        *
+        [ O ][   ][ • ][   ][ D ]
+        [   ][   ][ • ][   ][   ]
+        [   ][   ][ • ][   ][   ]
+        [   ][   ][ • ][   ][   ]
+        [   ][   ][ • ][   ][   ]
+
+        *
+         */
+        AlgoritmoEstrela aStar = new AlgoritmoEstrela(grade, origem, destino);
+        aStar.addBloqueio(grade[2][0]);
+        aStar.addBloqueio(grade[2][1]);
+        aStar.addBloqueio(grade[2][2]);
+        aStar.addBloqueio(grade[2][3]);
+        aStar.addBloqueio(grade[2][4]);
+        boolean resultado = aStar.iniciarPesquisa();
+        imprimirDesafio(origem, destino, aStar, grade);
+        imprimirResultado(origem, destino, aStar, grade);
+        if (!resultado) {
+            System.out.println("\nNão foi possível encontrar o destino");
+        }
+    }
+    
+    public static void testeSemSaida() {
+        Objeto[][] grade = new Objeto[5][5];
+        for (int i = 0; i < grade.length; i++) {
+            for (int j = 0; j < grade[i].length; j++) {
+                grade[i][j] = new Objeto(i, j);
+            }
+        }
+        //configura caminho incial e destino
+        Objeto origem = grade[0][0];
+        Objeto destino = grade[4][0];
+        /*configura bloqueios, exemplo
+        *
+        [ O ][   ][ • ][   ][ D ]
+        [   ][   ][ • ][   ][   ]
+        [   ][   ][ • ][   ][   ]
+        [   ][   ][ • ][   ][   ]
+        [   ][   ][ • ][   ][   ]
+
+        *
+         */
+        AlgoritmoEstrela aStar = new AlgoritmoEstrela(grade, origem, destino);
+        aStar.addBloqueio(grade[2][0]);
+        aStar.addBloqueio(grade[2][1]);
+        aStar.addBloqueio(grade[2][2]);
+        aStar.addBloqueio(grade[2][3]);
+        aStar.addBloqueio(grade[2][4]);
+        boolean resultado = aStar.iniciarPesquisa();
+        imprimirDesafio(origem, destino, aStar, grade);
+        imprimirResultado(origem, destino, aStar, grade);
+        if (!resultado) {
+            System.out.println("\nNão foi possível encontrar o destino");
+        }
     }
 
     public static void teste5x5() {
@@ -39,13 +110,12 @@ public class GeradorCaminhos {
         aStar.addBloqueio(grade[2][1]);
         aStar.addBloqueio(grade[2][2]);
         aStar.addBloqueio(grade[1][2]);
-
-        long tempoAntes = System.nanoTime();
-        boolean pesquisaOk = aStar.iniciarPesquisa();
-        long tempoDepois = System.nanoTime();
+        boolean resultado = aStar.iniciarPesquisa();
         imprimirDesafio(origem, destino, aStar, grade);
         imprimirResultado(origem, destino, aStar, grade);
-        System.out.println("\nTempo de pesquisa: " + (tempoDepois - tempoAntes) + "ns");
+        if (!resultado) {
+            System.out.println("\nNão foi possível encontrar o destino");
+        }
     }
 
     public static void teste6x6() {
@@ -74,13 +144,12 @@ public class GeradorCaminhos {
         aStar.addBloqueio(grade[2][1]);
         aStar.addBloqueio(grade[2][2]);
         aStar.addBloqueio(grade[1][2]);
-
-        long tempoAntes = System.nanoTime();
-        aStar.iniciarPesquisa();
-        long tempoDepois = System.nanoTime();
+        boolean resultado = aStar.iniciarPesquisa();
         imprimirDesafio(origem, destino, aStar, grade);
         imprimirResultado(origem, destino, aStar, grade);
-        System.out.println("\nTempo de pesquisa: " + (tempoDepois - tempoAntes) + "ns");
+        if (!resultado) {
+            System.out.println("\nNão foi possível encontrar o destino");
+        }
     }
 
     public static void teste7x7() {
@@ -123,12 +192,12 @@ public class GeradorCaminhos {
         aStar.addBloqueio(grade[5][5]);
         aStar.addBloqueio(grade[6][1]);
 
-        long tempoAntes = System.nanoTime();
-        aStar.iniciarPesquisa();
-        long tempoDepois = System.nanoTime();
+        boolean resultado = aStar.iniciarPesquisa();
         imprimirDesafio(origem, destino, aStar, grade);
         imprimirResultado(origem, destino, aStar, grade);
-        System.out.println("\nTempo de pesquisa: " + (tempoDepois - tempoAntes) + "ns");
+        if (!resultado) {
+            System.out.println("\nNão foi possível encontrar o destino");
+        }
     }
 
     public static void imprimirResultado(Objeto origem, Objeto destino, AlgoritmoEstrela aStar, Objeto[][] grade) {
@@ -167,7 +236,7 @@ public class GeradorCaminhos {
     }
 
     public static void imprimirDesafio(Objeto origem, Objeto destino, AlgoritmoEstrela aStar, Objeto[][] grade) {
-        System.out.println("*********Desafio gerado*********");
+        System.out.println("\n*********Desafio gerado*********");
         for (int i = 0; i < grade.length; i++) {
             System.out.println("");
             for (int j = 0; j < grade[i].length; j++) {
