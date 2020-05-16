@@ -1,0 +1,7 @@
+tamanho:6
+origem:1-1
+destino:5-5
+bloqueio:2-0
+bloqueio:2-1
+bloqueio:2-2
+bloqueio:1-2
